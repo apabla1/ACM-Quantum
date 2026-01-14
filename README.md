@@ -27,7 +27,7 @@ Once you have successfully completed the above steps **please make sure to come 
 
 These instructions work for all operating systems.
 1. Open Terminal
-2. Paste `ssh-keygen -t ed25519 -C "your_email@example.com"`, substituting your GitHub email address (terpmail and personal both work)
+2. Paste `ssh-keygen -t ed25519 -C "your_email@example.com"`, substituting your GitHub email address (ucla and personal both work)
 3. When you're prompted to "Enter a file in which to save the key", you can **press Enter to accept the default file location**. Please note that if you created SSH keys previously, ssh-keygen may ask you to rewrite another key. If this is the case, press `ctrl + c` to cancel the generation, you already have a key.
 4. At the prompt, type a secure passphrase. I prefer something short - you will be typing this a lot. A weak password is a hell of a lot better than no password.
 
