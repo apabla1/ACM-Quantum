@@ -44,13 +44,20 @@ Optional: If you do not want to type the password every time you push/pull [Use 
 ### Windows
 
 *This will only work on Windows 10 and newer.  If you are on an older version, you will probably need to set up a Linux VM.*
-**All instructions must be executed within WSL, NOT in Powershell**
+**All instructions (except 1) must be executed within WSL, NOT in Powershell**
 
 1. Follow the directions [here](https://docs.microsoft.com/en-us/windows/wsl/install-win10) to install the Windows Subsystem for Linux
 2. Make sure you are on WSL 2 with [this test](https://learn.microsoft.com/en-us/windows/wsl/install#check-which-version-of-wsl-you-are-running)
 3. Install the basic dependencies:
-    - Run `sudo apt update && sudo apt upgrade` to update your local package listing
-    - Run `sudo apt install qiskit`
+    - Run:
+      ```
+      sudo apt update && sudo apt upgrade -y
+      sudo apt install -y git python3 python3-venv python3-pip
+      python3 -m venv ~/.venvs/qiskit
+      source ~/.venvs/qiskit/bin/activate
+      python3 -m pip install -U pip
+      python3 -m pip install qiskit
+      ```
 4. Jump back to [Set Up SSH Authentication](#set-up-ssh-authentication) to complete the remaining steps for this project.
 
 ### MacOS
@@ -62,7 +69,14 @@ Check the [Special macOS Instructions](#special-macos-instructions) to check if 
     - Run `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
     - **if you're prompted with instructions to add Homebrew to your PATH, copy and paste the three commands provided by the terminal after running the above command**
 2. Install the basic dependencies
-    - Run `brew install qiskit`
+    - Run:
+      ```
+      brew install python
+      python3 -m venv ~/.venvs/qiskit
+      source ~/.venvs/qiskit/bin/activate
+      python3 -m pip install -U pip
+      python3 -m pip install qiskit
+      ```
 3. Jump back to [Set Up SSH Authentication](#set-up-ssh-authentication) to complete the remaining steps for this project.
 
 #### Special MacOS Instructions
@@ -82,5 +96,15 @@ These instructions assume you have a Debian-based system (e.g. Ubuntu) using the
 
 1. Firstly, install the basic dependencies:
     - Run `sudo apt update` to update your local package listing
-    - Run `sudo apt install qiskit`
-2. Jump back to [Set Up SSH Authentication](#set-up-ssh-authentication) to complete the remaining steps for this project.
+    - Run:
+      ```
+      sudo apt update
+      sudo apt install -y git python3 python3-venv python3-pip
+      
+      python3 -m venv ~/.venvs/qiskit
+      source ~/.venvs/qiskit/bin/activate
+      
+      python3 -m pip install -U pip
+      python3 -m pip install qiskit
+      ```
+3. Jump back to [Set Up SSH Authentication](#set-up-ssh-authentication) to complete the remaining steps for this project.
