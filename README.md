@@ -13,6 +13,7 @@
 ### Install Software
 
 **Please skip to the section below that corresponds with your operating system.**
+
 Once you finish installation, move on to setting up SSH authentication.
 - [Windows](#windows)
 - [macOS](#macos)
@@ -23,6 +24,7 @@ Once you have successfully completed the above steps **please make sure to come 
 ### Set Up SSH Authentication
 
 **If you are on Windows, do the key setup and clone in WSL. NOT in Powershell/CMD**
+
 These instructions work for all operating systems.
 1. Open Terminal
 2. Paste `ssh-keygen -t ed25519 -C "your_email@example.com"`, substituting your GitHub email address (terpmail and personal both work)
@@ -30,6 +32,7 @@ These instructions work for all operating systems.
 4. At the prompt, type a secure passphrase. I prefer something short - you will be typing this a lot. A weak password is a hell of a lot better than no password.
 
 You have now created a public/private key pair located at `~/.ssh/id_ed25519` and `~/.ssh/id_ed25519.pub`
+
 Next, we will add your public key to your GitHub account
 
 5. Run `cat ~/.ssh/id_ed25519.pub` and copy the public key that is displayed.
@@ -44,6 +47,7 @@ Optional: If you do not want to type the password every time you push/pull [Use 
 ### Windows
 
 *This will only work on Windows 10 and newer.  If you are on an older version, you will probably need to set up a Linux VM.*
+
 **All instructions (except 1) must be executed within WSL, NOT in Powershell**
 
 1. Follow the directions [here](https://docs.microsoft.com/en-us/windows/wsl/install-win10) to install the Windows Subsystem for Linux
