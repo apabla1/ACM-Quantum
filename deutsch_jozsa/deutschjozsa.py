@@ -13,7 +13,7 @@
 # limitations under the License.
 
 """
-Bernstein-Vazirani Algorithm Implementation
+Deutsch-Jozsa Algorithm Implementation
 
 """
 import os
@@ -30,33 +30,33 @@ from qbraid_algorithms.utils import _prep_qasm_file
 
 def generate_program(bitstring: Union[str, list[int]]) -> QasmModule:
     """
-    Load the Bernstein-Vazirani circuit as a pyqasm module.
+    Load the Deutsch-Jozsa circuit as a pyqasm module.
 
     Args:
         bitstring (Union[str, list[int]]): The hidden bitstring `s` as a string of '0's and '1's
 
     Returns:
-        PyQASM module containing the Bernstein-Vazirani circuit
+        PyQASM module containing the Deutsch-Jozsa circuit
     """
 
-    # Load the Bernstein-Vazirani QASM files into a staging directory
+    # Load the Deutsch-Jozsa QASM files into a staging directory
     temp_dir = tempfile.mkdtemp()
-    bernvaz_src = Path(__file__).parent.parent / "qasm_resources/bernvaz.qasm"
-    bernvaz_dst = os.path.join(temp_dir, "bernvaz.qasm")
-    bernvaz_sub_src = (
-        Path(__file__).parent.parent / "qasm_resources/bernvaz_subroutine.qasm"
+    deutsch_jozsa_src = Path(__file__).parent.parent / "qasm_resources/dj.qasm"
+    deutsch_jozsa_dst = os.path.join(temp_dir, "dj.qasm")
+    deutsch_jozsa_sub_src = (
+        Path(__file__).parent.parent / "qasm_resources/dj_subroutine.qasm"
     )
-    bernvaz_sub_dst = os.path.join(temp_dir, "bernvaz_subroutine.qasm")
-    shutil.copy(bernvaz_src, bernvaz_dst)
-    shutil.copy(bernvaz_sub_src, bernvaz_sub_dst)
+    deutsch_jozsa_sub_dst = os.path.join(temp_dir, "dj_subroutine.qasm")
+    shutil.copy(deutsch_jozsa_src, deutsch_jozsa_dst)
+    shutil.copy(deutsch_jozsa_sub_src, deutsch_jozsa_sub_dst)
 
     # Replace variable placeholders with user-defined parameters
     replacements = _generate_replacements(bitstring)
-    _prep_qasm_file(bernvaz_sub_dst, replacements)
-    _prep_qasm_file(bernvaz_dst, replacements)
+    _prep_qasm_file(deutsch_jozsa_sub_dst, replacements)
+    _prep_qasm_file(deutsch_jozsa_dst, replacements)
 
     # Load the algorithm as a pyqasm module
-    module = pyqasm.load(bernvaz_dst)
+    module = pyqasm.load(deutsch_jozsa_dst)
 
     # Delete the created files
     shutil.rmtree(temp_dir)
@@ -68,46 +68,46 @@ def save_to_qasm(
     bitstring: Union[str, list[int]], quiet: bool = False, path: Optional[str] = None
 ) -> None:
     """
-    Creates a Bernstein-Vazirani subroutine module with user-defined hidden bitstring.
+    Creates a Deutsch-Jozsa subroutine module with user-defined hidden bitstring.
 
     Args:
         bitstring (Union[str, list[int]]): The hidden bitstring.
         quiet (bool): If True, suppresses output messages.
-        path (str): The directory path where the Bernstein-Vazirani subroutine will be created.
+        path (str): The directory path where the Deutsch-Jozsa subroutine will be created.
                    If None, creates in the current working directory.
 
     Returns:
         None
     """
     # Copy the B-V subroutine QASM file to the specified or current working directory
-    bernvaz_src = (
-        Path(__file__).parent.parent / "qasm_resources/bernvaz_subroutine.qasm"
+    deutsch_jozsa_src = (
+        Path(__file__).parent.parent / "qasm_resources/dj_subroutine.qasm"
     )
     if path is None:
-        bernvaz_dst = os.path.join(os.getcwd(), "bernvaz.qasm")
+        deutsch_jozsa_dst = os.path.join(os.getcwd(), "dj.qasm")
     else:
-        bernvaz_dst = os.path.join(path, "bernvaz.qasm")
-    shutil.copy(bernvaz_src, bernvaz_dst)
+        deutsch_jozsa_dst = os.path.join(path, "dj.qasm")
+    shutil.copy(deutsch_jozsa_src, deutsch_jozsa_dst)
 
     # Replace variable placeholders with user-defined parameters
     replacements = _generate_replacements(bitstring)
-    _prep_qasm_file(bernvaz_dst, replacements)
+    _prep_qasm_file(deutsch_jozsa_dst, replacements)
 
     if not quiet:
-        print(f"Subroutine 'bernvaz' has been added to {bernvaz_dst}")
+        print(f"Subroutine 'deutsch_jozsa' has been added to {deutsch_jozsa_dst}")
 
 
 def generate_oracle(
     bitstring: Union[str, list[int]], quiet: bool = False, path: Optional[str] = None
 ) -> None:
     """
-    Creates a Bernstein-Vazirani oracle encoded with user-defined hidden bitstring.
+    Creates a Deutsch-Jozsa oracle encoded with user-defined hidden bitstring.
 
     Args:
         bitstring (Union[str, list[int]]): The hidden bitstring `s` as a string
                                    of '0's and '1's
         quiet (bool): If True, suppresses output messages.
-        path (str): The directory path where the Bernstein-Vazirani oracle will be created.
+        path (str): The directory path where the Deutsch-Jozsa oracle will be created.
                    If None, creates in the current working directory.
 
     Returns:
@@ -158,4 +158,4 @@ def _generate_replacements(bitstring: Union[str, list[int]]) -> dict[str, str]:
     """
     input_size = len(bitstring)
     decimal_value = _convert_bitstring_decimal(bitstring)
-    return {"BERNVAZ_SIZE": str(input_size), "SECRET_BITSTRING": str(decimal_value)}
+    return {"deutsch_jozsa_SIZE": str(input_size), "SECRET_BITSTRING": str(decimal_value)}
