@@ -1,6 +1,4 @@
-
 """
-Deutsch-Jozsa Algorithm
 Deutsch-Jozsa Algorithm
 
 .. admonition:: Deutsch-Jozsa
