@@ -5,5 +5,5 @@ qubit[DEUTSCH_SIZE] q;
 qubit[1] ancilla;
 bit[DEUTSCH_SIZE] b;
 
-bernvaz(q, ancilla);
+deutschjozsa(q, ancilla);
 b = measure q;
