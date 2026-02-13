@@ -84,37 +84,6 @@ def save_to_qasm(
         print(f"Subroutine 'deutsch_jozsa' has been added to {deutsch_jozsa_dst}")
 
 
-def generate_oracle(
-    input_size: int, is_const: bool, quiet: bool = False, path: Optional[str] = None
-) -> None:
-    """
-    Creates a Deutsch-Jozsa oracle.
-
-    Args:
-        input_size: Number of input qubits (n).
-        is_const: If True, constant oracle; else balanced oracle.
-        quiet (bool): If True, suppresses output messages.
-        path (str): The directory path where the Deutsch-Jozsa oracle will be created.
-                   If None, creates in the current working directory.
-
-    Returns:
-        None
-    """
-    # Copy the oracle QASM file to the specified or current working directory
-    oracle_src = Path(__file__).parent.parent / "qasm_resources/oracle.qasm"
-    if path is None:
-        oracle_dst = os.path.join(os.getcwd(), "oracle.qasm")
-    else:
-        oracle_dst = os.path.join(path, "oracle.qasm")
-    shutil.copy(oracle_src, oracle_dst)
-
-    # Replace variable placeholders with user-defined parameters
-    replacements = _generate_replacements(input_size, is_const)
-    _prep_qasm_file(oracle_dst, replacements)
-
-    if not quiet:
-        print(f"Oracle 'oracle' has been added to {oracle_dst}")
-
 def _generate_replacements(input_size: int, is_const: bool) -> dict[str, str]:
     """
     Generates a dictionary of replacements for QASM variable placeholders.
@@ -125,4 +94,4 @@ def _generate_replacements(input_size: int, is_const: bool) -> dict[str, str]:
     Returns:
         dict[str, str]: Dictionary mapping variable names to their string values
     """
-    return {"DEUTSCH_ZISA": str(input_size), "IS_CONST": "true" if is_const else "false")}
+    return {"DEUTSCH_SIZE": str(input_size), "IS_CONST": "true" if is_const else "false"}

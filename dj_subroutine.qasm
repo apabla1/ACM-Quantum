@@ -2,7 +2,7 @@ OPENQASM 3.0;
 include "stdgates.inc";
 include "dj_oracle.qasm";
 
-def deutschjozsa(qubit[DEUTSCH_SIZE] q, qubit[1] ancilla, bool IS_CONST) {
+def deutschjozsa(qubit[DEUTSCH_SIZE] q, qubit[1] ancilla) {
     int[16] n = DEUTSCH_SIZE;
     for int i in [0:n - 1] {
         h q[i];
